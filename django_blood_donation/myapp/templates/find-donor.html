@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find a Donor</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        /* Container for search section */
+        .search-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 100px; /* Increased space between image & search box */
+            margin: 30px auto;
+        }
+        /* Left-side image */
+        .search-image {
+            width: 280px; /* Slightly bigger for better visibility */
+            height: auto;
+            border-radius: 10px;
+        }
+        /* Search Box */
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .search-container input {
+            padding: 10px;
+            width: 270px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .search-container button {
+            padding: 10px 15px;
+            background: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        /* Donor Card Design */
+        .donor-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .donor-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 250px;
+            text-align: center;
+            padding: 15px;
+        }
+        h3 {
+            color: green;
+             font-size: 18px;
+             font-weight: bold;
+             margin: 20px auto; /* auto centers it horizontally */
+             padding: 10px;
+             border: 2px solid green;
+             border-radius: 5px;
+             display: block; /* ensures it takes up full width so margin:auto works */
+             width: fit-content; /* shrinks to fit content */
+             text-align: center;
+        }
+
+        .donor-card h4 {
+            margin: 12px 0;
+            color: #d9534f;
+        }
+        .donor-card p {
+            font-size: 16px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Find a Blood Donor</h1>
+        <nav>
+            <a href="{% url 'index' %}">Home</a>
+            <a href="{% url 'register' %}">Register</a>
+            <a href="{% url 'find_donor' %}">Find Donor</a>
+            <a href="{% url 'request_blood' %}">Request Blood</a>
+            <a href="{% url 'view_blood_requests' %}">View Requests</a>
+            <a href="{% url 'about' %}">About</a>
+        </nav>
+    </header>
+
+    <!-- Search Section with Image on Left -->
+    <section>
+        <h2 class="page-header">Search For a Donor</h2>
+
+        <div class="search-section">
+            <!-- Left-side image -->
+            <img src="{% static 'images/MB.jpg' %}" alt="Blood Donation" class="search-image">
+
+            <!-- Search Form -->
+            <div class="search-container">
+                <form method="GET">
+                    <input type="text" name="blood_type" placeholder="Enter Blood Type (e.g., A+)" value="{{ query|default:'' }}" required>
+                    <input type="text" name="city" placeholder="Enter City" value="{{ city_query|default:'' }}" required>
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+
+        {% if query %}
+            <h3>Search Results for "{{ query }}"</h3>
+        {% endif %}
+
+        {% if donors %}
+            <div class="donor-grid">
+                {% for donor in donors %}
+                <div class="donor-card">
+                    <h4>{{ donor.name }}</h4>
+                    <p><strong>Blood Type:</strong> {{ donor.blood_type }}</p>
+                    <p><strong>City:</strong> {{ donor.city }}</p>
+                    <p><strong>Contact:</strong> {{ donor.contact_number }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        
+
+        {% elif query %}
+            <p style="text-align: center; color: red;">No donors found for blood type "{{ query }}".</p>
+        {% endif %}
+    </section>
+
+</body>
+</html>

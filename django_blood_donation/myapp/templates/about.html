@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Django Project</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+    <header>
+        <h1>About Us</h1>
+        <nav>
+            <a href="{% url 'index' %}">Home</a>
+            <a href="{% url 'register' %}">Register</a>
+            <a href="{% url 'find_donor' %}">Find Donor</a>
+            <a href="{% url 'request_blood' %}">Request Blood</a>
+            <a href="{% url 'view_blood_requests' %}">View Requests</a>
+            <a href="{% url 'about' %}">About</a>
+        </nav>
+    </header>
+
+    <section>
+        <h2 class="page-header">Who We Are</h2>
+             <div style="text-align: center;">
+
+                  <p>We are a dedicated platform connecting blood donors with those in need.
+
+                   be a life saver for someone donate blood
+</p>
+
+        <!-- Image centered on the page -->
+        <div style="text-align: center;">
+            <img src="{% static 'images/about.jpg' %}" alt="Blood Donation" style="width: 30%; margin-top: 20px;">
+        </div>
+
+        <!-- Quotation section -->
+        <blockquote style="text-align: center; font-style: italic; margin-top: 30px;">
+            "Saving lives, one drop at a time."
+        </blockquote>
+    </section>
+</body>
+</html>

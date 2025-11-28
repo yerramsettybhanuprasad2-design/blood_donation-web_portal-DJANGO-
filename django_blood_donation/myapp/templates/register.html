@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register as a Donor</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    <style>
+        /* Video Styling */
+        #donorVideo {
+            width: 50%;
+            max-width: 400px;
+            display: block;
+            margin: 10px auto;
+            border-radius: 10px;
+        }
+        /* Form styling */
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        input, button {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: red;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Donor Registration</h1>
+        <nav>
+            <a href="{% url 'index' %}">Home</a>
+            <a href="{% url 'register' %}">Register</a>
+            <a href="{% url 'find_donor' %}">Find Donor</a>
+            <a href="{% url 'request_blood' %}">Request Blood</a>
+            <a href="{% url 'view_blood_requests' %}">View Requests</a>
+            <a href="{% url 'about' %}">About</a>
+        </nav>
+    </header>
+
+    <section>
+        <h2 class="page-header">Register as a Donor</h2>
+
+        <!-- Display Messages -->
+        {% if messages %}
+            <div style="text-align: center;">
+            <ul>
+                 {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <!-- Video Section -->
+        <video id="donorVideo" autoplay muted loop playsinline controls>
+            <source src="{% static 'images/Video.mp4' %}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <!-- Donor Registration Form -->
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Full Name" required>
+            <input type="text" name="blood_type" placeholder="Blood Type (A+, B-, etc.)" required>
+            <input type="text" name="contact_number" placeholder="Contact Number" required>
+            <input type="text" name="city" placeholder="City" required>
+            <button type="submit">Register</button>
+        </form>
+    </section>
+
+
+</body>
+</html>

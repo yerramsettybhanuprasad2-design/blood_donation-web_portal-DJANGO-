@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Blood</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        /* Success Message Styling */
+        .success-message {
+             color: green;
+             font-size: 18px;
+             font-weight: bold;
+             margin: 20px auto; /* auto centers it horizontally */
+             padding: 10px;
+             border: 2px solid green;
+             border-radius: 5px;
+             display: block; /* ensures it takes up full width so margin:auto works */
+             width: fit-content; /* shrinks to fit content */
+             text-align: center;
+        }
+
+        /* Main Container (Moves Image Further Left) */
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* Moves content to the left */
+            gap: 50px; /* Increases space between image & form */
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        /* Image Styling */
+        .img-container {
+            flex: 1;
+            text-align: left;
+            margin-left: -100px; /* Moves image further left */
+        }
+        .img-container img {
+            width: 100%;
+            max-width: 350px;
+            border-radius: 10px;
+            display: block;
+        }
+
+        /* Form Styling */
+        .form-container {
+            flex: 1.5;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .form-container input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: block;
+        }
+        .form-container button {
+            background-color: red;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+        }
+        .form-container button:hover {
+            background-color: darkred;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Request Blood</h1>
+        <nav>
+           <a href="{% url 'index' %}">Home</a>
+           <a href="{% url 'register' %}">Register</a>
+           <a href="{% url 'find_donor' %}">Find Donor</a>
+           <a href="{% url 'request_blood' %}">Request Blood</a>
+           <a href="{% url 'view_blood_requests' %}">View Requests</a>
+           <a href="{% url 'about' %}">About</a>
+        </nav>
+    </header>
+
+         <h2 class="page-header">Request Blood</h2>
+
+    <!-- Success message -->
+    {% if success_message %}
+        <p class="success-message">{{ success_message }}</p>
+    {% endif %}
+
+    <div class="container">
+        <!-- Image on Left (Moved Further Left) -->
+        <div class="img-container">
+            <img src="{% static 'images/hospital.jpg' %}" alt="Donate Blood">
+        </div>
+
+        <!-- Form on Right -->
+        <div class="form-container">
+            <form method="POST">
+                {% csrf_token %}
+                <input type="text" name="requestName" placeholder="Your Name" required>
+                <input type="text" name="requestBloodType" placeholder="Required Blood Type" required>
+                <input type="text" name="hospital" placeholder="Hospital Name" required>
+                <input type="text" name="city" placeholder="Enter your city" required>
+                <input type="text" name="phoneNumber" placeholder="Phone Number" required>
+                <button type="submit">Request Now</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
